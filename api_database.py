@@ -70,20 +70,15 @@ def post_hardware(safety_car: SafetyCar):
         "time": datetime.datetime.now()
     }
     collection_sensor.insert_one(query_sensor)
-    try:
-        if safety_car.sensor1 == 1 or safety_car.sensor2 == 1 or safety_car.sensor3 == 1 or safety_car.sensor4 == 1 or safety_car.sensor5 == 1 or safety_car.sensor6 == 1 or safety_car.sensor7 == 1:
-            if safety_car.heat >= 39 or safety_car.carbon >= 380:
-                query_warning = {
-                    "warning": 1,
-                    "time": datetime.datetime.now()
-                }
-                collection_warning.insert_one(query_warning)
-    except:
-        query_warning = {
-            "warning": 0,
-            "time": datetime.datetime.now()
-        }
-        collection_warning.insert_one(query_warning)
+    # check human has move?
+    if safety_car.sensor1 == 1 or safety_car.sensor2 == 1 or safety_car.sensor3 == 1 or safety_car.sensor4 == 1 or safety_car.sensor5 == 1 or safety_car.sensor6 == 1 or safety_car.sensor7 == 1:
+        # check environment is dangerous?
+        if safety_car.heat >= 39 or safety_car.carbon >= 380:
+            query_warning = {
+                "warning": 1,
+                "time": datetime.datetime.now()
+            }
+            collection_warning.insert_one(query_warning)
     return {
         "result": "success"
     }
