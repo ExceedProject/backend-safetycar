@@ -33,8 +33,8 @@ app.add_middleware(
 
 @app.get('/safety-car/status')
 def get_status():
-    heat_co_status = list(collection_notify.find({}, {"_id": 0}))
-    sensor_status = list(collection_sensor.find({}, {"_id": 0}))
+    heat_co_status = list(collection_notify.find())
+    sensor_status = list(collection_sensor.find())
     query_status = {
         "heat_bool": heat_co_status[-1]["heat_bool"],
         "carbon_bool": heat_co_status[-1]["carbon_bool"],

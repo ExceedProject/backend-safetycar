@@ -58,7 +58,7 @@ def post_hardware(safety_car: SafetyCar):
         "heat_bool": safety_car.heat_bool,
         "time": datetime.datetime.now()
     }
-    collection_co_heat.insert_one(query_notify_status)
+    collection_notify.insert_one(query_notify_status)
     query_sensor = {
         "sensor1": safety_car.sensor1,
         "sensor2": safety_car.sensor2,
@@ -82,3 +82,57 @@ def post_hardware(safety_car: SafetyCar):
     return {
         "result": "success"
     }
+
+
+@app.get('/safety-car/status')
+def get_status():
+    heat_co_status = list(collection_notify.find())
+    heat_co_status = sorted(heat_co_status, key=lambda d: d['time'])
+    sensor_status = list(collection_sensor.find())
+    sensor_status = sorted(sensor_status, key=lambda d: d['time'])
+    query_status = {
+        "heat_bool": heat_co_status[-1]["heat_bool"],
+        "carbon_bool": heat_co_status[-1]["carbon_bool"],
+        "sensor1": sensor_status[-1]["sensor1"],
+        "sensor2": sensor_status[-1]["sensor2"],
+        "sensor3": sensor_status[-1]["sensor3"],
+        "sensor4": sensor_status[-1]["sensor4"],
+        "sensor5": sensor_status[-1]["sensor5"],
+        "sensor6": sensor_status[-1]["sensor6"],
+        "sensor7": sensor_status[-1]["sensor7"]
+    }
+    return query_status
+
+
+@app.get('/safety-car/graph')
+def get_value_graph():
+    """
+    Returns:
+        list of heat and carbon value
+    """
+    heat_co_value = list(collection_co_heat.find({}, {"_id": 0}))
+    if len(heat_co_value) != 0:
+        data = []
+        for result in heat_co_value:
+            data.append(result)
+        return data
+    else:
+        raise HTTPException(404, f"Couldn't find heat and carbon value")
+
+
+@app.get('/safety-car/warning')
+def get_warning():
+    list_warning = list(collection_warning.find({}, {"_id": 0}))
+    if len(list_warning) != 0:
+        data = []
+        for result in list_warning:
+            data.append(result)
+        #  if warning time more than 30 second
+        for i in range(len(data)):
+            if abs(data[i-1]["time"] - data[i]["time"]) >= datetime.timedelta(seconds=30):
+                return {
+                    "warning": 1
+                }
+    else:
+        raise HTTPException(404, f"Couldn't find warning in database")
+
