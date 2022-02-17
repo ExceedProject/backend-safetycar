@@ -128,11 +128,14 @@ def get_warning():
         for result in list_warning:
             data.append(result)
         #  if warning time more than 30 second
-        for i in range(len(data)):
-            if abs(data[i-1]["time"] - data[i]["time"]) >= datetime.timedelta(seconds=30):
-                return {
-                    "warning": 1
-                }
+        if data[-1]["time"] + datetime.timedelta(minutes=5) < datetime.datetime.now():
+            return {
+                "warning": 0
+            }
+        if abs(data[-2]["time"] - data[-1]["time"]) >= datetime.timedelta(seconds=30):
+            return {
+                "warning": 1
+            }
     else:
         raise HTTPException(404, f"Couldn't find warning in database")
 
