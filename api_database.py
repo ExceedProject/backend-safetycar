@@ -43,6 +43,13 @@ class SafetyCar(BaseModel):
     sensor5: bool
     sensor6: bool
     sensor7: bool
+    sensor8: bool
+    sensor9: bool
+    sensor10: bool
+    sensor11: bool
+    sensor12: bool
+    sensor13: bool
+    sensor14: bool
 
 
 @app.post('/safety-car')
@@ -67,11 +74,18 @@ def post_hardware(safety_car: SafetyCar):
         "sensor5": safety_car.sensor5,
         "sensor6": safety_car.sensor6,
         "sensor7": safety_car.sensor7,
+        "sensor8": safety_car.sensor8,
+        "sensor9": safety_car.sensor9,
+        "sensor10": safety_car.sensor10,
+        "sensor11": safety_car.sensor11,
+        "sensor12": safety_car.sensor12,
+        "sensor13": safety_car.sensor13,
+        "sensor14": safety_car.sensor14,
         "time": datetime.datetime.now()
     }
     collection_sensor.insert_one(query_sensor)
     # check human has move?
-    if safety_car.sensor1 == 1 or safety_car.sensor2 == 1 or safety_car.sensor3 == 1 or safety_car.sensor4 == 1 or safety_car.sensor5 == 1 or safety_car.sensor6 == 1 or safety_car.sensor7 == 1:
+    if safety_car.sensor1 == 1 or safety_car.sensor2 == 1 or safety_car.sensor3 == 1 or safety_car.sensor4 == 1 or safety_car.sensor5 == 1 or safety_car.sensor6 == 1 or safety_car.sensor7 == 1 or safety_car.sensor8 == 1 or safety_car.sensor9 == 1 or safety_car.sensor10 == 1 or safety_car.sensor11 == 1 or safety_car.sensor12 == 1 or safety_car.sensor13 == 1 or safety_car.sensor14 == 1:
         # check environment is dangerous?
         if safety_car.heat >= 39 or safety_car.carbon >= 380:
             query_warning = {
@@ -99,7 +113,14 @@ def get_status():
         "sensor4": sensor_status[-1]["sensor4"],
         "sensor5": sensor_status[-1]["sensor5"],
         "sensor6": sensor_status[-1]["sensor6"],
-        "sensor7": sensor_status[-1]["sensor7"]
+        "sensor7": sensor_status[-1]["sensor7"],
+        "sensor8": sensor_status[-1]["sensor8"],
+        "sensor9": sensor_status[-1]["sensor9"],
+        "sensor10": sensor_status[-1]["sensor10"],
+        "sensor11": sensor_status[-1]["sensor11"],
+        "sensor12": sensor_status[-1]["sensor12"],
+        "sensor13": sensor_status[-1]["sensor13"],
+        "sensor14": sensor_status[-1]["sensor14"]
     }
     return query_status
 
