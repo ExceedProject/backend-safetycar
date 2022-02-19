@@ -55,40 +55,41 @@ class SafetyCar(BaseModel):
 @app.post('/safety-car')
 def post_hardware(safety_car: SafetyCar):
     query_co_heat = {
-        "carbon": safety_car.carbon,
-        "heat": safety_car.heat,
+        "carbon": float(safety_car.carbon),
+        "heat": float(safety_car.heat),
         "time": datetime.datetime.now()
     }
     collection_co_heat.insert_one(query_co_heat)
     query_notify_status = {
-        "carbon_bool": safety_car.carbon_bool,
-        "heat_bool": safety_car.heat_bool,
+        "carbon_bool": int(safety_car.carbon_bool),
+        "heat_bool": int(safety_car.heat_bool),
         "time": datetime.datetime.now()
     }
     collection_notify.insert_one(query_notify_status)
     query_sensor = {
-        "sensor1": safety_car.sensor1,
-        "sensor2": safety_car.sensor2,
-        "sensor3": safety_car.sensor3,
-        "sensor4": safety_car.sensor4,
-        "sensor5": safety_car.sensor5,
-        "sensor6": safety_car.sensor6,
-        "sensor7": safety_car.sensor7,
-        "sensor8": safety_car.sensor8,
-        "sensor9": safety_car.sensor9,
-        "sensor10": safety_car.sensor10,
-        "sensor11": safety_car.sensor11,
-        "sensor12": safety_car.sensor12,
-        "sensor13": safety_car.sensor13,
-        "sensor14": safety_car.sensor14,
+        "sensor1": int(safety_car.sensor1),
+        "sensor2": int(safety_car.sensor2),
+        "sensor3": int(safety_car.sensor3),
+        "sensor4": int(safety_car.sensor4),
+        "sensor5": int(safety_car.sensor5),
+        "sensor6": int(safety_car.sensor6),
+        "sensor7": int(safety_car.sensor7),
+        "sensor8": int(safety_car.sensor8),
+        "sensor9": int(safety_car.sensor9),
+        "sensor10": int(safety_car.sensor10),
+        "sensor11": int(safety_car.sensor11),
+        "sensor12": int(safety_car.sensor12),
+        "sensor13": int(safety_car.sensor13),
+        "sensor14": int(safety_car.sensor14),
         "time": datetime.datetime.now()
     }
     collection_sensor.insert_one(query_sensor)
     # check human has move?
-    if safety_car.sensor1 == 1 or safety_car.sensor2 == 1 or safety_car.sensor3 == 1 or safety_car.sensor4 == 1 or \
-            safety_car.sensor5 == 1 or safety_car.sensor6 == 1 or safety_car.sensor7 == 1 or safety_car.sensor8 == 1\
-            or safety_car.sensor9 == 1 or safety_car.sensor10 == 1 or safety_car.sensor11 == 1 or \
-            safety_car.sensor12 == 1 or safety_car.sensor13 == 1 or safety_car.sensor14 == 1:
+    if int(safety_car.sensor1) == 1 or int(safety_car.sensor2) == 1 or int(safety_car.sensor3) == 1 or \
+            int(safety_car.sensor4) == 1 or int(safety_car.sensor5) == 1 or int(safety_car.sensor6) == 1 \
+            or int(safety_car.sensor7) == 1 or int(safety_car.sensor8) == 1\
+            or int(safety_car.sensor9) == 1 or int(safety_car.sensor10) == 1 or int(safety_car.sensor11) == 1 or \
+            int(safety_car.sensor12) == 1 or int(safety_car.sensor13) == 1 or int(safety_car.sensor14) == 1:
         # check environment is dangerous?
         if safety_car.heat >= 39 or safety_car.carbon >= 380:
             query_warning = {
