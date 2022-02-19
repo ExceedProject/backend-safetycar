@@ -73,6 +73,8 @@ def post_hardware(safety_car: SafetyCar):
         query_notify_status = {
             "carbon_bool": 1,
             "heat_bool": 1,
+            "heat_color": "red",
+            "carbon_color": "red",
             "time": datetime.datetime.now()
         }
         collection_notify.insert_one(query_notify_status)
@@ -80,6 +82,8 @@ def post_hardware(safety_car: SafetyCar):
         query_notify_status = {
             "carbon_bool": 1,
             "heat_bool": 0,
+            "heat_color": "green",
+            "carbon_color": "red",
             "time": datetime.datetime.now()
         }
         collection_notify.insert_one(query_notify_status)
@@ -87,6 +91,8 @@ def post_hardware(safety_car: SafetyCar):
         query_notify_status = {
             "carbon_bool": 0,
             "heat_bool": 0,
+            "heat_color": "green",
+            "carbon_color": "green",
             "time": datetime.datetime.now()
         }
         collection_notify.insert_one(query_notify_status)
@@ -94,6 +100,8 @@ def post_hardware(safety_car: SafetyCar):
         query_notify_status = {
             "carbon_bool": 0,
             "heat_bool": 1,
+            "heat_color": "red",
+            "carbon_color": "green",
             "time": datetime.datetime.now()
         }
         collection_notify.insert_one(query_notify_status)
@@ -186,15 +194,18 @@ def get_warning():
         if data[-1]["time"] + datetime.timedelta(minutes=3) < datetime.datetime.now():
             return {
                 "warning": 0,
+                "warning_color": "green"
             }
         #  if warning time less than 30 second
         if (data[-1]["time"] - data[-2]["time"]) <= datetime.timedelta(seconds=30):
             return {
-                "warning": 1
+                "warning": 1,
+                "warning_color": "red"
             }
         else:
             return {
-                "warning": 0
+                "warning": 0,
+                "warning_color": "green"
             }
     else:
         raise HTTPException(404, f"Couldn't find warning in database")
