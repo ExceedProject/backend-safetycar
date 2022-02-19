@@ -163,7 +163,9 @@ def get_status():
         "sensor11": sensor_status[-1]["sensor11"],
         "sensor12": sensor_status[-1]["sensor12"],
         "sensor13": sensor_status[-1]["sensor13"],
-        "sensor14": sensor_status[-1]["sensor14"]
+        "sensor14": sensor_status[-1]["sensor14"],
+        "heat_color": heat_co_status[-1]["heat_color"],
+        "carbon_color": heat_co_status[-1]["carbon_color"]
     }
     return query_status
 
