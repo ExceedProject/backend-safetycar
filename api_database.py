@@ -37,8 +37,6 @@ app.add_middleware(
 class SafetyCar(BaseModel):
     heat: float
     carbon: float
-    heat_bool: int
-    carbon_bool: int
     sensor1: int
     sensor2: int
     sensor3: int
@@ -71,12 +69,34 @@ def post_hardware(safety_car: SafetyCar):
         "time": datetime.datetime.now()
     }
     collection_co_heat.insert_one(query_co_heat)
-    query_notify_status = {
-        "carbon_bool": int(safety_car.carbon_bool),
-        "heat_bool": int(safety_car.heat_bool),
-        "time": datetime.datetime.now()
-    }
-    collection_notify.insert_one(query_notify_status)
+    if safety_car.carbon >= 380 and safety_car.heat >= 39:
+        query_notify_status = {
+            "carbon_bool": 1,
+            "heat_bool": 1,
+            "time": datetime.datetime.now()
+        }
+        collection_notify.insert_one(query_notify_status)
+    elif safety_car.carbon >= 380 and safety_car.heat < 39:
+        query_notify_status = {
+            "carbon_bool": 1,
+            "heat_bool": 0,
+            "time": datetime.datetime.now()
+        }
+        collection_notify.insert_one(query_notify_status)
+    elif safety_car.carbon < 380 and safety_car.heat < 39:
+        query_notify_status = {
+            "carbon_bool": 0,
+            "heat_bool": 0,
+            "time": datetime.datetime.now()
+        }
+        collection_notify.insert_one(query_notify_status)
+    elif safety_car.carbon < 380 and safety_car.heat >= 39:
+        query_notify_status = {
+            "carbon_bool": 0,
+            "heat_bool": 1,
+            "time": datetime.datetime.now()
+        }
+        collection_notify.insert_one(query_notify_status)
     query_sensor = {
         "sensor1": int(safety_car.sensor1),
         "sensor2": int(safety_car.sensor2),
