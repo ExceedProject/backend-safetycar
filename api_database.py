@@ -147,27 +147,57 @@ def get_status():
     heat_co_status = sorted(heat_co_status, key=lambda d: d['time'])
     sensor_status = list(collection_sensor.find())
     sensor_status = sorted(sensor_status, key=lambda d: d['time'])
-    query_status = {
-        "heat_bool": heat_co_status[-1]["heat_bool"],
-        "carbon_bool": heat_co_status[-1]["carbon_bool"],
-        "sensor1": sensor_status[-1]["sensor1"],
-        "sensor2": sensor_status[-1]["sensor2"],
-        "sensor3": sensor_status[-1]["sensor3"],
-        "sensor4": sensor_status[-1]["sensor4"],
-        "sensor5": sensor_status[-1]["sensor5"],
-        "sensor6": sensor_status[-1]["sensor6"],
-        "sensor7": sensor_status[-1]["sensor7"],
-        "sensor8": sensor_status[-1]["sensor8"],
-        "sensor9": sensor_status[-1]["sensor9"],
-        "sensor10": sensor_status[-1]["sensor10"],
-        "sensor11": sensor_status[-1]["sensor11"],
-        "sensor12": sensor_status[-1]["sensor12"],
-        "sensor13": sensor_status[-1]["sensor13"],
-        "sensor14": sensor_status[-1]["sensor14"],
-        "heat_color": heat_co_status[-1]["heat_color"],
-        "carbon_color": heat_co_status[-1]["carbon_color"]
-    }
-    return query_status
+    if sensor_status[-1]["sensor1"] == 1 or sensor_status[-1]["sensor2"] == 1 or sensor_status[-1]["sensor3"] == 1 or \
+            sensor_status[-1]["sensor4"] == 1 or sensor_status[-1]["sensor5"] == 1 or sensor_status[-1]["sensor6"] == 1\
+            or sensor_status[-1]["sensor7"] == 1 or sensor_status[-1]["sensor8"] == 1 or \
+            sensor_status[-1]["sensor9"] == 1 or sensor_status[-1]["sensor10"] == 1 or \
+            sensor_status[-1]["sensor11"] == 1 or sensor_status[-1]["sensor12"] == 1 or \
+            sensor_status[-1]["sensor13"] == 1 or sensor_status[-1]["sensor14"] == 1:
+        query_status = {
+            "heat_bool": heat_co_status[-1]["heat_bool"],
+            "carbon_bool": heat_co_status[-1]["carbon_bool"],
+            "sensor1": sensor_status[-1]["sensor1"],
+            "sensor2": sensor_status[-1]["sensor2"],
+            "sensor3": sensor_status[-1]["sensor3"],
+            "sensor4": sensor_status[-1]["sensor4"],
+            "sensor5": sensor_status[-1]["sensor5"],
+            "sensor6": sensor_status[-1]["sensor6"],
+            "sensor7": sensor_status[-1]["sensor7"],
+            "sensor8": sensor_status[-1]["sensor8"],
+            "sensor9": sensor_status[-1]["sensor9"],
+            "sensor10": sensor_status[-1]["sensor10"],
+            "sensor11": sensor_status[-1]["sensor11"],
+            "sensor12": sensor_status[-1]["sensor12"],
+            "sensor13": sensor_status[-1]["sensor13"],
+            "sensor14": sensor_status[-1]["sensor14"],
+            "heat_color": heat_co_status[-1]["heat_color"],
+            "carbon_color": heat_co_status[-1]["carbon_color"],
+            "sensor_color": "green"
+        }
+        return query_status
+    else:
+        query_status = {
+            "heat_bool": heat_co_status[-1]["heat_bool"],
+            "carbon_bool": heat_co_status[-1]["carbon_bool"],
+            "sensor1": sensor_status[-1]["sensor1"],
+            "sensor2": sensor_status[-1]["sensor2"],
+            "sensor3": sensor_status[-1]["sensor3"],
+            "sensor4": sensor_status[-1]["sensor4"],
+            "sensor5": sensor_status[-1]["sensor5"],
+            "sensor6": sensor_status[-1]["sensor6"],
+            "sensor7": sensor_status[-1]["sensor7"],
+            "sensor8": sensor_status[-1]["sensor8"],
+            "sensor9": sensor_status[-1]["sensor9"],
+            "sensor10": sensor_status[-1]["sensor10"],
+            "sensor11": sensor_status[-1]["sensor11"],
+            "sensor12": sensor_status[-1]["sensor12"],
+            "sensor13": sensor_status[-1]["sensor13"],
+            "sensor14": sensor_status[-1]["sensor14"],
+            "heat_color": heat_co_status[-1]["heat_color"],
+            "carbon_color": heat_co_status[-1]["carbon_color"],
+            "sensor_color": "red"
+        }
+        return query_status
 
 
 @app.get('/safety-car/graph')
