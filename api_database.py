@@ -34,22 +34,22 @@ app.add_middleware(
 class SafetyCar(BaseModel):
     heat: float
     carbon: float
-    heat_bool: bool
-    carbon_bool: bool
-    sensor1: bool
-    sensor2: bool
-    sensor3: bool
-    sensor4: bool
-    sensor5: bool
-    sensor6: bool
-    sensor7: bool
-    sensor8: bool
-    sensor9: bool
-    sensor10: bool
-    sensor11: bool
-    sensor12: bool
-    sensor13: bool
-    sensor14: bool
+    heat_bool: int
+    carbon_bool: int
+    sensor1: int
+    sensor2: int
+    sensor3: int
+    sensor4: int
+    sensor5: int
+    sensor6: int
+    sensor7: int
+    sensor8: int
+    sensor9: int
+    sensor10: int
+    sensor11: int
+    sensor12: int
+    sensor13: int
+    sensor14: int
 
 
 @app.post('/safety-car')
@@ -85,7 +85,10 @@ def post_hardware(safety_car: SafetyCar):
     }
     collection_sensor.insert_one(query_sensor)
     # check human has move?
-    if safety_car.sensor1 == 1 or safety_car.sensor2 == 1 or safety_car.sensor3 == 1 or safety_car.sensor4 == 1 or safety_car.sensor5 == 1 or safety_car.sensor6 == 1 or safety_car.sensor7 == 1 or safety_car.sensor8 == 1 or safety_car.sensor9 == 1 or safety_car.sensor10 == 1 or safety_car.sensor11 == 1 or safety_car.sensor12 == 1 or safety_car.sensor13 == 1 or safety_car.sensor14 == 1:
+    if safety_car.sensor1 == 1 or safety_car.sensor2 == 1 or safety_car.sensor3 == 1 or safety_car.sensor4 == 1 or \
+            safety_car.sensor5 == 1 or safety_car.sensor6 == 1 or safety_car.sensor7 == 1 or safety_car.sensor8 == 1\
+            or safety_car.sensor9 == 1 or safety_car.sensor10 == 1 or safety_car.sensor11 == 1 or \
+            safety_car.sensor12 == 1 or safety_car.sensor13 == 1 or safety_car.sensor14 == 1:
         # check environment is dangerous?
         if safety_car.heat >= 39 or safety_car.carbon >= 380:
             query_warning = {
