@@ -223,22 +223,23 @@ def get_warning():
         data = []
         for result in list_warning:
             data.append(result)
-        if data[-1]["time"] + datetime.timedelta(minutes=3) < datetime.datetime.now():
-            return {
-                "warning": 0,
-                "warning_color": "green"
-            }
-        #  if warning time less than 30 second
-        if (data[-1]["time"] - data[-2]["time"]) <= datetime.timedelta(seconds=30):
-            return {
-                "warning": 1,
-                "warning_color": "red"
-            }
-        else:
-            return {
-                "warning": 0,
-                "warning_color": "green"
-            }
+        if len(data) > 1:
+            if data[-1]["time"] + datetime.timedelta(minutes=3) < datetime.datetime.now():
+                return {
+                    "warning": 0,
+                    "warning_color": "green"
+                }
+            #  if warning time less than 30 second
+            if (data[-1]["time"] - data[-2]["time"]) <= datetime.timedelta(seconds=30):
+                return {
+                    "warning": 1,
+                    "warning_color": "red"
+                }
+            else:
+                return {
+                    "warning": 0,
+                    "warning_color": "green"
+                }
     else:
         raise HTTPException(404, f"Couldn't find warning in database")
 
