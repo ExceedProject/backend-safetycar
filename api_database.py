@@ -124,11 +124,11 @@ def post_hardware(safety_car: SafetyCar):
     }
     collection_sensor.insert_one(query_sensor)
     # check human has move?
-    if int(safety_car.sensor1) == 1 or int(safety_car.sensor2) == 1 or int(safety_car.sensor3) == 1 or \
-            int(safety_car.sensor4) == 1 or int(safety_car.sensor5) == 1 or int(safety_car.sensor6) == 1 \
-            or int(safety_car.sensor7) == 1 or int(safety_car.sensor8) == 1\
-            or int(safety_car.sensor9) == 1 or int(safety_car.sensor10) == 1 or int(safety_car.sensor11) == 1 or \
-            int(safety_car.sensor12) == 1 or int(safety_car.sensor13) == 1 or int(safety_car.sensor14) == 1:
+    if int(safety_car.sensor1) == 0 or int(safety_car.sensor2) == 0 or int(safety_car.sensor3) == 0 or \
+            int(safety_car.sensor4) == 0 or int(safety_car.sensor5) == 0 or int(safety_car.sensor6) == 0 \
+            or int(safety_car.sensor7) == 0 or int(safety_car.sensor8) == 0\
+            or int(safety_car.sensor9) == 0 or int(safety_car.sensor10) == 0 or int(safety_car.sensor11) == 0 or \
+            int(safety_car.sensor12) == 0 or int(safety_car.sensor13) == 0 or int(safety_car.sensor14) == 0:
         # check environment is dangerous?
         if safety_car.heat >= 39 or safety_car.carbon >= 380:
             query_warning = {
@@ -172,7 +172,7 @@ def get_status():
             "sensor14": sensor_status[-1]["sensor14"],
             "heat_color": heat_co_status[-1]["heat_color"],
             "carbon_color": heat_co_status[-1]["carbon_color"],
-            "sensor_color": "green"
+            "sensor_color": "red"
         }
         return query_status
     else:
@@ -195,7 +195,7 @@ def get_status():
             "sensor14": sensor_status[-1]["sensor14"],
             "heat_color": heat_co_status[-1]["heat_color"],
             "carbon_color": heat_co_status[-1]["carbon_color"],
-            "sensor_color": "red"
+            "sensor_color": "green"
         }
         return query_status
 
